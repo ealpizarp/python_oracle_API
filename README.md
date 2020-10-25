@@ -1,8 +1,8 @@
 # python_oracle_API
 
-This is a simple python Rest API that connects with oracle database. It supports
-the `PUT`, `POST`, `DELETE` and `GET` request, for testing this request can be made
-with postman or insomnia. 
+A simple python Rest API that connects with an oracle database. It supports
+the following requests: `PUT`, `POST`, `DELETE` and `GET`, the testing of these
+can be done with postman or insomnia. 
 
 ## Create virtual enviroment
 
@@ -22,6 +22,7 @@ Run the rest api
 
 `python python_api.py`
 
+You're all set!
 
 
 

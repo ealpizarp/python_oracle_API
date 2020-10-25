@@ -1,6 +1,14 @@
+# Autor: Eric Alpizar Prendas
+#        Rodrigo Espinach
+# Fecha: 10/24/2020
+
 import cx_Oracle
 
+# Se importa la biblioteca encargada de realizar la conexion con Oracle
+
 from flask import Flask, jsonify, request
+
+# Se importa Flask, una biblioteca que se encarga de facilitar la construccion del API
 
 import json
 
