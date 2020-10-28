@@ -29,7 +29,7 @@ You're all set!
 ## React web interface
 
 To run the react web interface it's required the installation of Node.js and bootstrap 
-via npm. Once you have downloaded this programs you wull need not create a react app.
+via npm. Once you have downloaded this programs you will need to create a react app.
 
 The react app can be instantiated with the following commands:
 
