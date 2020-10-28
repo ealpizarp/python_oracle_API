@@ -40,6 +40,8 @@ Change directory to the new react app folder
 
 `cd my-app`
 
+Replace the `my-app` src folder with the one included in the repository
+
 Start the app
 
 `npm start`
@@ -48,7 +50,7 @@ Start the app
 ## Oracle Database Script
 
 The script for the oracle database it's in the database_script folder. This script
-can be run on sqldeveloper on in the sql terminal.
+can be run by sqldeveloper or sql terminal utility.
 
 
 
