@@ -4,6 +4,8 @@
 
 import cx_Oracle
 
+from flask_cors import CORS
+
 # Se importa la biblioteca encargada de realizar la conexion con Oracle
 
 from flask import Flask, jsonify, request
@@ -16,6 +18,8 @@ import json
 
 app = Flask(__name__)
 
+CORS(app)
+
 #Datos ingresados para la conexion a la base de datos cx_Oracle.connect(<username>, <password>, "localhost/XE")
 
 connection = cx_Oracle.connect("ealpizarp", "root", "localhost/XE")
@@ -27,12 +31,12 @@ cursor = connection.cursor()
 @app.route('/movies', methods=['GET'])
 def movies():
     cursor.execute("""
-    SELECT * FROM peliculas
+    SELECT * FROM movie
     """)
     row = cursor.fetchall()
     dic_array = []
     for index, record in enumerate(row):
-        dic_array.append({'description': record[1], 'id': record[0], 'name':record[2], 'urlPhoto:': record[3]})
+        dic_array.append({'description': record[1], 'id': record[0], 'name':record[2], 'urlPhoto': record[3]})
 
     return jsonify(dic_array)
 
@@ -43,7 +47,7 @@ def movies():
 def getMovie(movie_id):
 
     cursor.execute("""
-    SELECT * FROM peliculas WHERE :id_ext = id_movie
+    SELECT * FROM movie WHERE :id_ext = id_movie
     """, id_ext = movie_id)
     row = cursor.fetchall()
     dic_array = []
@@ -66,7 +70,7 @@ def addMovie():
     data = request.get_json(force=True)
     try:
         cursor.execute("""
-        INSERT INTO peliculas VALUES (:id_ext, :descripcion_pel, :nom_pelicula, :url_image)
+        INSERT INTO movie VALUES (:id_ext, :descripcion_pel, :nom_pelicula, :url_image)
         """, id_ext = data['id'], descripcion_pel = data['description'],
             nom_pelicula = data['name'], url_image = data['urlPhoto'])
 
@@ -92,7 +96,7 @@ def editMovie(movie_id):
 
         data = request.get_json(force=True)
         
-        statement = """ UPDATE peliculas SET description_movie = COALESCE(:dec_mov, description_movie), name_movie = COALESCE(:n_mov, name_movie),
+        statement = """ UPDATE movie SET description_movie = COALESCE(:dec_mov, description_movie), name_movie = COALESCE(:n_mov, name_movie),
         url_photo_movie = COALESCE(:url_ph, url_photo_movie) WHERE id_movie = :id_ext """
         params = {'id_ext': movie_id , 'n_mov': data['name'], 'url_ph': data['urlPhoto'], 'dec_mov': data['description'] }
 
@@ -119,7 +123,7 @@ def editMovie(movie_id):
 def deleteMovie(movie_id):
     try:
         cursor.execute(
-            "DELETE FROM peliculas WHERE id_movie = :id_ext ", id_ext = movie_id 
+            "DELETE FROM movie WHERE id_movie = :id_ext ", id_ext = movie_id 
         )
     except cx_Oracle.DatabaseError as e:
         error, = e.args
@@ -129,7 +133,7 @@ def deleteMovie(movie_id):
         print('Datos eliminados correctamente')
 
         cursor.execute("""
-        SELECT * FROM peliculas
+        SELECT * FROM movie
         """)
 
         row = cursor.fetchall()
